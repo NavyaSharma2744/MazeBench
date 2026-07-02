@@ -1,4 +1,5 @@
 """
+algorithms_visual.py
 Step-by-step visual versions of search algorithms.
 Yields state at each step for animation.
 """
