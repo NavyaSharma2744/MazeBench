@@ -54,10 +54,10 @@ https://github.com/user-attachments/assets/62e38997-8fd3-4a8a-8e73-6a390c8cfa8c
 
 | Algorithm | Optimal | Data Structure |
 |-----------|:-------:|---------------|
-| BFS | ✅ | Queue |
-| DFS | ❌ | Stack |
-| A* | ✅ | Priority Queue |
-| ACO | Near Optimal | Ant Colony Optimization |
+| BFS | Optimal  | Queue |
+| DFS | Not Gauranteed | Stack |
+| A* | Optimal | Priority Queue |
+| ACO | Heuristic | Ant Colony Optimization |
 
 ---
 
