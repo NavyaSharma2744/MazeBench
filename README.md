@@ -63,7 +63,7 @@ https://github.com/user-attachments/assets/62e38997-8fd3-4a8a-8e73-6a390c8cfa8c
 
 ### Benchmark Dashboard
 
-[![Dashboard]](https://navyasharma2744.github.io/MazeBench/)
+[Dashboard](https://navyasharma2744.github.io/MazeBench/)
 
 ---
 
@@ -150,7 +150,7 @@ MazeSolver/
   
 ---
 
-## Read my blog post [![here](https://dev.to/navya_sharma2744/i-turned-pathfinding-algorithms-into-an-interactive-game-p40)!
+## Read my blog post [here](https://dev.to/navya_sharma2744/i-turned-pathfinding-algorithms-into-an-interactive-game-p40)!
 
 ## Author
 
