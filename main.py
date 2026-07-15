@@ -12,11 +12,6 @@ Controls:
     R - Reset
     Q - Quit
 
-Step-by-step controls:
-    SPACE - Next step
-    F - Fast forward
-    S - Slow auto-play
-
 Usage:
     python main.py
 """
@@ -46,8 +41,7 @@ class MazeSolverGame:
             '1': ('BFS', bfs),
             '2': ('DFS', dfs),
             '3': ('A*', astar),
-            '4': ('ACO', aco),
-            '5': ()
+            '4': ('ACO', aco)
         }
 
         # Visual (step-by-step) algorithms
