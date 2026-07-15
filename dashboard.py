@@ -10,6 +10,8 @@ pip install pandas plotly
 import os
 import pandas as pd
 import plotly.express as px
+import shutil
+from pathlib import Path
 
 RESULTS="results"
 CSV=os.path.join(RESULTS,"benchmark.csv")
@@ -110,10 +112,41 @@ padding:12px 18px;border-radius:8px;cursor:pointer;margin-right:10px}}
 </body>
 </html>
 """
-    out=os.path.join(RESULTS,"benchmark_dashboard.html")
-    with open(out,"w",encoding="utf8") as f:
-        f.write(html)
-    print("Created",out)
+# -----------------------------
+# Create output directories
+# -----------------------------
+RESULTS_DIR = Path("results")
+DOCS_DIR = Path("docs")
 
-if __name__=="__main__":
-    create_dashboard()
+RESULTS_DIR.mkdir(exist_ok=True)
+DOCS_DIR.mkdir(exist_ok=True)
+
+# -----------------------------
+# Save dashboard to results
+# -----------------------------
+dashboard_path = RESULTS_DIR / "benchmark_dashboard.html"
+
+with open(dashboard_path, "w", encoding="utf-8") as f:
+    f.write(html)
+
+print(f"✓ Dashboard saved to {dashboard_path}")
+
+# -----------------------------
+# Automatically deploy to GitHub Pages
+# -----------------------------
+github_dashboard = DOCS_DIR / "index.html"
+
+shutil.copy2(dashboard_path, github_dashboard)
+
+print(f"✓ GitHub Pages dashboard updated -> {github_dashboard}")
+
+# -----------------------------
+# Copy benchmark CSV
+# -----------------------------
+csv_source = RESULTS_DIR / "benchmark.csv"
+
+if csv_source.exists():
+    shutil.copy2(csv_source, DOCS_DIR / "benchmark.csv")
+    print("✓ benchmark.csv copied to docs/")
+else:
+    print("⚠ benchmark.csv not found")
