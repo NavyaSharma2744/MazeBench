@@ -63,7 +63,7 @@ https://github.com/user-attachments/assets/62e38997-8fd3-4a8a-8e73-6a390c8cfa8c
 
 ### Benchmark Dashboard
 
-[![Dashboard](assets/dashboard.png)](https://navyasharma2744.github.io/MazeBench/)
+[![Dashboard]](https://navyasharma2744.github.io/MazeBench/)
 
 ---
 
