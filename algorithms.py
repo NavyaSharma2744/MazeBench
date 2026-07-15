@@ -4,8 +4,6 @@ algorithms.py: Search algorithm implementations.
 Includes:
 - BFS
 - DFS
-- Dijkstra
-- Greedy Best-First Search
 - A*
 - Ant Colony Optimization (ACO)
 
@@ -13,8 +11,6 @@ Expected by main.py:
     from algorithms import (
         bfs,
         dfs,
-        dijkstra,
-        greedy_best_first,
         astar(A*),
         aco(Ant Colony Optimization),
     )
