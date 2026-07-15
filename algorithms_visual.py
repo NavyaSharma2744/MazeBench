@@ -1,7 +1,6 @@
 """
-algorithms_visual.py
-Step-by-step visual versions of search algorithms.
-Yields state at each step for animation.
+algorithms_visual.py: Animates algorithm's path
+
 """
 
 from collections import deque
@@ -48,6 +47,17 @@ def manhattan_distance(pos1, pos2):
 
 def nearest_exit_distance(pos, exits):
     return min(manhattan_distance(pos, e) for e in exits)
+
+def movement_cost(maze, pos):
+    """
+    Returns traversal cost for a cell.
+
+    Supports future weighted mazes.
+    Defaults to cost = 1.
+    """
+    if hasattr(maze, "movement_cost"):
+        return maze.movement_cost(*pos)
+    return 1
 
 
 def weighted_choice(candidates, weights):
@@ -275,7 +285,7 @@ def astar_visual(maze):
             return
 
         for neighbor in maze.get_neighbors(*current):
-            tentative_g = g_score[current] + 1
+            tentative_g = g_score[current] + movement_cost(maze, neighbor)
 
             if neighbor not in g_score or tentative_g < g_score[neighbor]:
                 came_from[neighbor] = current

@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Maze Solver Benchmark Report</title>
+<style>
+body {
+font-family: Arial;
+margin:40px;
+}
+img {
+width:650px;
+margin-bottom:30px;
+border:1px solid #ddd;
+}
+table {
+border-collapse:collapse;
+}
+td,th {
+border:1px solid #999;
+padding:8px;
+}
+</style>
+</head>
+<body>
+
+<h1>Maze Solver Benchmark Report</h1>
+
+<p>This report summarizes the performance of BFS, DFS, A*, and ACO across randomly generated mazes.</p>
+
+<table>
+<tr>
+<th>Algorithm</th>
+<th>Runtime (ms)</th>
+<th>Nodes</th>
+<th>Path</th>
+<th>Efficiency</th>
+<th>Success %</th>
+</tr>
+
+<tr>
+<td>BFS</td>
+<td>0.098</td>
+<td>37.4</td>
+<td>14.2</td>
+<td>0.415</td>
+<td>100.0</td>
+</tr>
+
+<tr>
+<td>DFS</td>
+<td>0.074</td>
+<td>27.3</td>
+<td>21.1</td>
+<td>0.827</td>
+<td>100.0</td>
+</tr>
+
+<tr>
+<td>A*</td>
+<td>0.089</td>
+<td>20.7</td>
+<td>14.2</td>
+<td>0.728</td>
+<td>100.0</td>
+</tr>
+
+<tr>
+<td>ACO</td>
+<td>68.449</td>
+<td>14274.5</td>
+<td>14.2</td>
+<td>0.001</td>
+<td>100.0</td>
+</tr>
+
+</table>
+
+<h2>Average Runtime</h2>
+<img src="runtime.png">
+
+<h2>Average Nodes Expanded</h2>
+<img src="nodes.png">
+
+<h2>Average Path Length</h2>
+<img src="path_length.png">
+
+<h2>Search Efficiency</h2>
+<img src="efficiency.png">
+
+<h2>Success Rate</h2>
+<img src="success_rate.png">
+
+</body>
+</html>

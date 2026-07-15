@@ -47,6 +47,7 @@ class MazeSolverGame:
             '2': ('DFS', dfs),
             '3': ('A*', astar),
             '4': ('ACO', aco),
+            '5': ()
         }
 
         # Visual (step-by-step) algorithms

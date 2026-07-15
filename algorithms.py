@@ -1,33 +1,40 @@
 """
-algorithms.py
-=============
-Search algorithm implementations for the Maze Solver project.
+algorithms.py: Search algorithm implementations.
 
 Includes:
 - BFS
 - DFS
+- Dijkstra
+- Greedy Best-First Search
 - A*
 - Ant Colony Optimization (ACO)
 
 Expected by main.py:
-    from algorithms import bfs, dfs, astar, aco
+    from algorithms import (
+        bfs,
+        dfs,
+        dijkstra,
+        greedy_best_first,
+        astar(A*),
+        aco(Ant Colony Optimization),
+    )
 
-This file is written to be fairly tolerant of different Maze class designs.
-It tries these, in order:
+
+Order:
 1. maze.get_neighbors(pos)
 2. maze.get_valid_neighbors(pos)
 3. maze.neighbors(pos)
 4. derive neighbors from common maze fields like walls/grid
 
-Expected Maze fields/methods (at least some of these):
+Expected Maze fields:
 - maze.start -> (row, col)
 - maze.exits -> list/set of exit cells
 - maze.rows, maze.cols
 - maze.walls OR maze.grid (optional fallback)
+
 """
 
 from __future__ import annotations
-
 import heapq
 import math
 import random
@@ -47,10 +54,15 @@ class SearchResult:
     nodes_expanded: int
     metadata: dict = field(default_factory=dict)
 
+def movement_cost(maze, position):
+    """
+    Supports future weighted mazes.
+    Returns 1 if no movement_cost() exists.
+    """
+    if hasattr(maze, "movement_cost"):
+        return maze.movement_cost(*position)
+    return 1
 
-# ---------------------------------------------------------------------
-# Utility helpers
-# ---------------------------------------------------------------------
 def _is_goal(pos: Position, maze) -> bool:
     return pos in set(maze.exits)
 
@@ -58,6 +70,16 @@ def _is_goal(pos: Position, maze) -> bool:
 def _heuristic(pos: Position, exits) -> int:
     """Manhattan distance to nearest exit."""
     return min(abs(pos[0] - er) + abs(pos[1] - ec) for er, ec in exits)
+
+
+def _movement_cost(maze, pos: Position) -> float:
+    """
+    Return traversal cost for a cell.
+    Defaults to 1 for unweighted mazes.
+    """
+    if hasattr(maze, "movement_cost"):
+        return maze.movement_cost(*pos)
+    return 1
 
 
 def _reconstruct_path(parent: Dict[Position, Optional[Position]], goal: Position) -> List[Position]:
@@ -134,9 +156,9 @@ def _get_neighbors(maze, pos: Position) -> List[Position]:
     return valid
 
 
-# ---------------------------------------------------------------------
+
 # BFS
-# ---------------------------------------------------------------------
+
 def bfs(maze) -> SearchResult:
     start = maze.start
     exits = set(maze.exits)
@@ -174,9 +196,9 @@ def bfs(maze) -> SearchResult:
     )
 
 
-# ---------------------------------------------------------------------
+
 # DFS
-# ---------------------------------------------------------------------
+
 def dfs(maze) -> SearchResult:
     start = maze.start
     exits = set(maze.exits)
@@ -217,9 +239,9 @@ def dfs(maze) -> SearchResult:
     )
 
 
-# ---------------------------------------------------------------------
+
 # A*
-# ---------------------------------------------------------------------
+
 def astar(maze) -> SearchResult:
     start = maze.start
     exits = set(maze.exits)
@@ -252,7 +274,7 @@ def astar(maze) -> SearchResult:
             )
 
         for neighbor in _get_neighbors(maze, current):
-            tentative_g = current_g + 1
+            tentative_g = current_g + _movement_cost(maze, neighbor)
 
             if neighbor not in g_score or tentative_g < g_score[neighbor]:
                 g_score[neighbor] = tentative_g
@@ -268,9 +290,8 @@ def astar(maze) -> SearchResult:
     )
 
 
-# ---------------------------------------------------------------------
 # ACO helpers
-# ---------------------------------------------------------------------
+
 def _path_length(path: List[Position]) -> int:
     return max(0, len(path) - 1)
 
@@ -363,9 +384,9 @@ def _deposit_pheromone(
         pheromone[(b, a)] = pheromone.get((b, a), 1.0) + amount
 
 
-# ---------------------------------------------------------------------
+
 # ACO
-# ---------------------------------------------------------------------
+
 def aco(
     maze,
     num_ants: int = 20,
@@ -468,3 +489,58 @@ def aco(
             "best_length": best_len if success else None,
         },
     )
+
+
+
+# Dijkstra
+
+def dijkstra(maze) -> SearchResult:
+    start = maze.start
+    exits = set(maze.exits)
+    pq=[(0,start)]
+    parent={start:None}
+    dist={start:0}
+    explored=[]
+    nodes_expanded=0
+    visited=set()
+    while pq:
+        cost,current=heapq.heappop(pq)
+        if current in visited:
+            continue
+        visited.add(current)
+        explored.append(current)
+        nodes_expanded+=1
+        if current in exits:
+            return SearchResult(True,_reconstruct_path(parent,current),explored,nodes_expanded,
+                                metadata={"path_cost":cost})
+        for neighbor in _get_neighbors(maze,current):
+            new_cost = cost + _movement_cost(maze, neighbor)
+            if new_cost<dist.get(neighbor,float('inf')):
+                dist[neighbor]=new_cost
+                parent[neighbor]=current
+                heapq.heappush(pq,(new_cost,neighbor))
+    return SearchResult(False,[],explored,nodes_expanded)
+
+
+# Greedy Best-First Search
+
+def greedy_best_first(maze) -> SearchResult:
+    start=maze.start
+    exits=set(maze.exits)
+    pq=[(_heuristic(start,exits),start)]
+    parent={start:None}
+    visited={start}
+    explored=[]
+    nodes_expanded=0
+    while pq:
+        _,current=heapq.heappop(pq)
+        explored.append(current)
+        nodes_expanded+=1
+        if current in exits:
+            return SearchResult(True,_reconstruct_path(parent,current),explored,nodes_expanded)
+        for neighbor in _get_neighbors(maze,current):
+            if neighbor not in visited:
+                visited.add(neighbor)
+                parent[neighbor]=current
+                heapq.heappush(pq,(_heuristic(neighbor,exits),neighbor))
+    return SearchResult(False,[],explored,nodes_expanded)
