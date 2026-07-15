@@ -1,49 +1,40 @@
-# Maze Solver
+# MazeBench: A Comparative Study of Pathfinding Algorithms
 
-A visual maze solver demonstrating **BFS, DFS, A\***, and **Ant Colony Optimization (ACO)** with step-by-step animation and algorithm comparison.
+An interactive maze-solving application with **real-time visualization** and an integrated **benchmarking framework** for comparing classical and bio-inspired pathfinding algorithms.
 
+<div align="center">
+
+**BFS • DFS • A* • Ant Colony Optimization (ACO)**
+
+</div>
+
+---
+
+<div align="center">
+  
 ## Demo
 
 https://github.com/user-attachments/assets/62e38997-8fd3-4a8a-8e73-6a390c8cfa8c
 
+</div>
+
 ## Features
 
-- **Four algorithms**
-  - **BFS** (Queue)
-  - **DFS** (Stack)
-  - **A\*** (Priority Queue)
-  - **ACO** (Ant Colony Optimization)
-- **Step-by-step visualization**  
-  Watch each algorithm explore the maze in real time.
-- **Algorithm comparison**  
-  Compare path length, nodes explored, execution time, and reward/performance metrics.
-- **Random maze generation**  
-  Generate new mazes on the fly.
-- **Multi-exit support**  
-  Mazes can have multiple exits.
-- **Wall toggle**  
-  Remove or restore walls to observe how each algorithm behaves differently.
+- Interactive maze visualization using **Pygame**
+- Implementations of **BFS, DFS, A*** and **ACO**
+- Step-by-step algorithm animation
+- Random maze generation with multiple exits
+- Automated benchmarking on **100+ randomly generated mazes**
+- Interactive analytics dashboard with Plotly
+- Performance report generation
+- Algorithm comparison based on:
+  - Runtime
+  - Nodes Expanded
+  - Path Length
+  - Search Efficiency
+  - Success Rate
 
-## Setup
-
-```bash
-# Create virtual environment
-python3 -m venv venv
-
-# Activate virtual environment
-source venv/bin/activate  # On macOS/Linux
-# or
-venv\Scripts\activate     # On Windows
-
-# Install dependencies
-pip install pygame-ce
-or
-python -m pip install -U pygame-ce
-
-## Running
-```bash
-python main.py
-```
+---
 
 ## Controls
 
@@ -61,23 +52,106 @@ python main.py
 
 ## Algorithms
 
-- **BFS**: Uses a queue (FIFO). Guarantees shortest path.
-- **DFS**: Uses a stack (LIFO). Does NOT guarantee shortest path.
-- **A***: Uses a priority queue ordered by f = g + h. Optimal and efficient.
+| Algorithm | Optimal | Data Structure |
+|-----------|:-------:|---------------|
+| BFS | ✅ | Queue |
+| DFS | ❌ | Stack |
+| A* | ✅ | Priority Queue |
+| ACO | Near Optimal | Ant Colony Optimization |
+
+---
+
+### Benchmark Dashboard
+
+![Dashboard](assets/dashboard.png)
+
+---
+
+## Benchmark Metrics
+
+Each algorithm is evaluated on randomly generated mazes using:
+
+- Runtime (ms)
+- Nodes Expanded
+- Path Length
+- Search Efficiency
+- Success Rate
+
+Results are exported as:
+
+- Interactive HTML Dashboard
+- CSV Dataset
+- Benchmark Summary
+  
+---
+
+## Getting Started
+
+```bash
+git clone <repository-url>
+
+cd MazeSolver
+
+python -m venv venv
+
+source venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+Run the visualizer
+
+```bash
+python main.py
+```
+
+Run benchmark
+
+```bash
+python benchmark_runner.py
+```
+
+Generate dashboard
+
+```bash
+python dashboard.py
+```
+---
 
 ## Project Structure
 
 ```
-├── main.py              # Entry point
-├── maze.py              # Maze grid and generation
-├── algorithms.py        # BFS, DFS, A* implementations
-├── algorithms_visual.py # Step-by-step versions for animation
-└── visualizer.py        # Pygame visualization
+MazeSolver/
+
+├── algorithms.py
+├── algorithms_visual.py
+├── maze.py
+├── visualizer.py
+├── main.py
+
+├── benchmark.py
+├── benchmark_runner.py
+├── metrics.py
+├── dashboard.py
+
+├── results/
+
+└── README.md
 ```
+---
 
 ## Tech Stack
 
-**Python** • **Pygame-ce** • **Queue** • **Stack** • **Priority Queue**
+- Python
+- Pygame-ce
+- Plotly
+- Pandas
+- Matplotlib
+  
+---
 
+## Author
+
+**Navya**
 
 
