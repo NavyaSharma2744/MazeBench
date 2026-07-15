@@ -150,7 +150,9 @@ MazeSolver/
   
 ---
 
-## Read my blog post [here](https://dev.to/navya_sharma2744/i-turned-pathfinding-algorithms-into-an-interactive-game-p40)!
+## Technical Blog
+
+Read my blog post [here](https://dev.to/navya_sharma2744/i-turned-pathfinding-algorithms-into-an-interactive-game-p40)!
 
 ## Author
 
